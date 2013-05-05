@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from pyramid.events import BeforeRender
+from pyramid.events import ContextFound
 
 from js.modernizr import modernizr
 
@@ -10,4 +10,4 @@ def load_fanstatic(event):
 
 
 def includeme(config):
-    config.add_subscriber(load_fanstatic, BeforeRender)
+    config.add_subscriber(load_fanstatic, ContextFound)

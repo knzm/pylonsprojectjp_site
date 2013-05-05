@@ -12,6 +12,8 @@ from pyramid.paster import (
     )
 
 from pylonsprojectjp.models import DBSession, BaseModel
+from pylonsprojectjp.apps.account.models import UserModel
+from pylonsprojectjp.apps.blog.models import EntryModel
 
 def usage(argv):
     cmd = os.path.basename(argv[0])
@@ -28,3 +30,6 @@ def main(argv=sys.argv):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     BaseModel.metadata.create_all(engine)
+    with transaction.manager:
+        admin = UserModel(name=u'admin', password=u'admin')
+        DBSession.add(admin)

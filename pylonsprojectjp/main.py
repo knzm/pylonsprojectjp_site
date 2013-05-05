@@ -23,5 +23,7 @@ def main(global_config, **settings):
     config.include('.urls')
     config.include('.subscribers')
     config.scan('.apps.top')
+    config.scan('.apps.account')
+    config.scan('.apps.blog')
 
     return config.make_wsgi_app()

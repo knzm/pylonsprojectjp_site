@@ -9,3 +9,5 @@ def includeme(config):
 
     # per-app urls
     config.include('.apps.top.urls')
+    config.include('.apps.blog.urls', route_prefix='/blog')
+    config.include('.apps.account.urls', route_prefix='/account')
