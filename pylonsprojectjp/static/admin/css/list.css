@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+/***************************************************
+　一覧画面メニュー
+***************************************************/
+
+changeState {
+    float: left;
+}
+.changeState p {
+    float: left;
+    margin: 0px 6px 0px 0px;
+    color: #353535;
+    display: inline;
+}
+.changeState form {
+    margin: 4px 6px 0px 0px;
+    display: inline;
+}
