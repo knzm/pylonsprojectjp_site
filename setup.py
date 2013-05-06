@@ -21,6 +21,7 @@ requires = [
     'pyramid_assetviews',
     'pyramid_fanstatic',
     'js.modernizr',
+    'js.bootstrap',
     ]
 
 setup(name='pylonsprojectjp',

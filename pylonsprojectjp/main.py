@@ -20,9 +20,14 @@ def main(global_config, **settings):
                           authentication_policy=authentication_policy,
                           authorization_policy=authorization_policy)
     config.add_layout('.layout.BasicLayout', 'layout.jinja2')
+    config.add_layout('.layout.AdminLayout', 'pylonsprojectjp:templates/admin/base.mako', name='admin')
+    config.include('.apps.admin')
+    config.include('.apps.blog')
     config.include('.urls')
     config.include('.subscribers')
+
     config.scan('.apps.top')
+    config.scan('.apps.admin')
     config.scan('.apps.account')
     config.scan('.apps.blog')
 
