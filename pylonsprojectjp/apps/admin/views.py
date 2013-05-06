@@ -60,6 +60,7 @@ class AdminView(object):
             "page_title": info.title,
             "page": page,
             "grid_data": {
+                "model_name": model_name,
                 "model_class": info.model_class,
                 "columns": info.list_columns,
                 "items": page.items,
@@ -72,3 +73,13 @@ class AdminView(object):
         model = self.get_model(self.request.matchdict['model'])
         entry = self.get_entry(model, self.request.matchdict['id'])
         return {"entry": entry, "model": model}
+
+    @view_config(route_name='admin_new', request_method='GET',
+                 renderer='pylonsprojectjp:templates/admin/new.mako')
+    def admin_new_entry(self):
+        return {}
+
+    @view_config(route_name='admin_edit', request_method='GET',
+                 renderer='pylonsprojectjp:templates/admin/edit.mako')
+    def admin_edit_entry(self):
+        return {}

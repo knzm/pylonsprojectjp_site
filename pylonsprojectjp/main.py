@@ -7,6 +7,7 @@ from sqlalchemy import engine_from_config
 
 from .models import DBSession
 
+
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
@@ -30,5 +31,9 @@ def main(global_config, **settings):
     config.scan('.apps.admin')
     config.scan('.apps.account')
     config.scan('.apps.blog')
+
+    # don't quote ";" in generated urls
+    from .custom import monkeypatch_quote_path_segment
+    monkeypatch_quote_path_segment()
 
     return config.make_wsgi_app()

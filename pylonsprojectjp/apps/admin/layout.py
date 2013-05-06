@@ -63,9 +63,9 @@ def grid_panel(context, request, data):
     # grid.insert(grid["id"], field)
     # fields.insert(0, field)
 
+    model_name = data['model_name']
     def edit_link(item):
-        url = ""
-        # url = request.route_url('admin_edit_entry', model=model_name, id=item.id)
+        url = request.route_url('admin_edit', model=model_name, id=item.id)
         return EDIT_LINK_TEMPLATE % dict(url=url, label='Edit')
     field = Field('edit', fatypes.String, edit_link)
     grid.append(field)
