@@ -18,6 +18,10 @@ class AdminView(object):
         self.context = context
         self.request = request
 
+        # from js import jquery_tablesorter
+        # jquery_tablesorter.tablesorter.need()
+        # jquery_tablesorter.blue.need()
+
     def get_model(self, model_name):
         return get_model(self.request, model_name)
 
@@ -40,14 +44,26 @@ class AdminView(object):
     @view_config(route_name='admin_index', request_method='GET',
                  renderer='pylonsprojectjp:templates/admin/list.mako')
     def admin_list_view(self):
-        info = get_form_info(self.request, self.request.matchdict['model'])
+        model_name = self.request.matchdict['model']
+
+        info = get_form_info(self.request, model_name)
         if info is None:
             raise HTTPNotFound('No such model')
+
+        # def fa_url(model_name, row_id):
+        #     return self.request.route_url('admin_entry', model=model_name, id=row_id)
+        # self.request.fa_url = fa_url
+        # self.request.model_name = model_name
+
         page = self.get_page(info.model_class)
         return {
             "page_title": info.title,
             "page": page,
-            "grid_data": {"columns": info.list_columns, "items": page.items},
+            "grid_data": {
+                "model_class": info.model_class,
+                "columns": info.list_columns,
+                "items": page.items,
+                },
             }
 
     @view_config(route_name='admin_entry', request_method='GET',

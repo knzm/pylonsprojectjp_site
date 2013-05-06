@@ -64,13 +64,7 @@ def add_admin_form(config, name=None, form_class=None, model_class=None,
 
 
 class ListColumn(object):
-    def __init__(self, name, label=None, renderer=None):
+    def __init__(self, name, label=None, field=None):
         self.name = name
         self.label = label or name
-        self.renderer = renderer
-
-    def render(self, data):
-        value = getattr(data, self.name)
-        if self.renderer:
-            return self.renderer(value)
-        return value
+        self.field = field

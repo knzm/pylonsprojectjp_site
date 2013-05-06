@@ -22,6 +22,7 @@ requires = [
     'pyramid_fanstatic',
     'js.modernizr',
     'js.bootstrap',
+    'formalchemy',
     ]
 
 setup(name='pylonsprojectjp',
