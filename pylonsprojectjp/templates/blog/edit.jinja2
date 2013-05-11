@@ -1,6 +1,7 @@
 {% extends main_template %}
 
-{%- block body -%}
+{%- block contents -%}
+<div id="main-wrapper">
 <form action="{{ request.route_url('blog_action',action=action) }}" method="post">
 {% if action =='edit' -%}
 {{ form.id() }}
@@ -48,4 +49,5 @@ textarea {
     color: red;
 }
 </style>
+</div>
 {%- endblock -%}

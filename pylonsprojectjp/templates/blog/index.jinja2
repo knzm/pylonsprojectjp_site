@@ -1,8 +1,7 @@
 {% extends main_template %}
 
-{%- block body -%}
-{{ panel('welcome') }}
-
+{%- block contents -%}
+<div id="main-wrapper">
 {% if paginator.items -%}
 
     {{ paginator.pager() }}
@@ -28,4 +27,6 @@
 
 <p><a href="{{ request.route_url('blog_action', action='create') }}">
 Create a new blog entry</a></p>
+
+</div>
 {%- endblock -%}
