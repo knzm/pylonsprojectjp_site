@@ -1,7 +1,11 @@
 {% extends main_template %}
 
 {%- block contents -%}
-<h1>{{ title }}</h1>
-<hr/>
-<p>{{ body }}</p>
+<div id="main-wrapper">
+  <div id="main">
+    <h1>{{ title }}</h1>
+    <hr />
+    <p>{{ body }}</p>
+  </div>
+</div>
 {%- endblock -%}

@@ -136,7 +136,6 @@ html {
 }
 #main-wrapper {
     margin: 0;
-    margin-right: 150px;
 }
 #main {
     padding: 10px;
@@ -164,6 +163,10 @@ html {
     font-size: 0.75em;
     margin: 0;
     padding: 5px;
+}
+
+.rightsidebar-container {
+    margin-right: 150px;
 }
 
 
