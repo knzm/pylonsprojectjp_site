@@ -14,6 +14,7 @@ from pyramid.paster import (
 from pylonsprojectjp.models import DBSession, BaseModel
 from pylonsprojectjp.apps.auth.models import UserModel, GroupModel
 from pylonsprojectjp.apps.blog.models import BlogEntryModel
+from pylonsprojectjp.apps.page.models import PageModel
 
 def usage(argv):
     cmd = os.path.basename(argv[0])

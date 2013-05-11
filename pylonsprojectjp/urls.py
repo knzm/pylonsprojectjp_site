@@ -8,6 +8,7 @@ def includeme(config):
     config.add_asset_views(static_assets, "favicon.ico", http_cache=3600)
 
     # per-app urls
+    config.include('.apps.page.urls')
     config.include('.apps.top.urls')
     config.include('.apps.auth.urls')
     config.include('.apps.admin.urls', route_prefix='/admin')

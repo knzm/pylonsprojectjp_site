@@ -37,6 +37,7 @@ def main(global_config, **settings):
     config.include('.subscribers')
 
     # load models, look up views, etc...
+    config.scan('.apps.page')
     config.scan('.apps.top')
     config.scan('.apps.admin')
     config.scan('.apps.auth')
