@@ -31,7 +31,6 @@ def main(global_config, **settings):
 
     # enable per-app extensions
     config.include('.apps.admin')
-    config.include('.apps.blog')
 
     # setup project extensions
     config.include('.urls')

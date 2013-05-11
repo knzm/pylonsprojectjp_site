@@ -2,13 +2,14 @@
 
 from zope.interface import Interface, Attribute
 
-__all__ = [
-    'IAdminFormInfo',
-]
+__all__ = ['IAdmin']
 
 
-class IAdminFormInfo(Interface):
-    form_class = Attribute("form_class")
-    model_class = Attribute("model_class")
+class IAdmin(Interface):
     title = Attribute("title")
     list_columns = Attribute("columns")
+    model_class = Attribute("model_class")
+
+    def get_form(self, entity):
+        """Return a form"""
+        pass

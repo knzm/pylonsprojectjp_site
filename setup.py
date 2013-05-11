@@ -23,6 +23,12 @@ requires = [
     'js.modernizr',
     'js.bootstrap',
     'formalchemy',
+    'pyramid_tw2',
+    'tw2.tinymce',
+    ]
+
+links = [
+    "https://github.com/knzm/pyramid_tw2/zipball/master#egg=pyramid_tw2-dev",
     ]
 
 setup(name='pylonsprojectjp',
@@ -44,6 +50,7 @@ setup(name='pylonsprojectjp',
       zip_safe=False,
       test_suite='pylonsprojectjp',
       install_requires=requires,
+      dependency_links=links,
       entry_points="""\
       [paste.app_factory]
       main = pylonsprojectjp:main

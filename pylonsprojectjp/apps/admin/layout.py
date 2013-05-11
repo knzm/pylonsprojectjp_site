@@ -6,8 +6,8 @@ from formalchemy import fatypes
 from formalchemy.fields import Field, AttributeField
 from formalchemy.tables import Grid
 
-from .api import get_model_names
-from .interfaces import IAdminFormInfo
+from .api import get_model_names, get_admin
+from .interfaces import IAdmin
 
 EDIT_LINK_TEMPLATE = u'''\
 <a href="%(url)s" title="%(label)s">%(label)s</a>
@@ -21,11 +21,10 @@ def menu_panel(context, request):
     for model_name in sorted(get_model_names(request)):
         url = request.route_url('admin_index', model=model_name)
 
-        title = None
-        info = request.registry.queryUtility(IAdminFormInfo, model_name)
-        if info:
-            title = getattr(info, 'title', None)
-        if title is None:
+        admin = get_admin(request, model_name)
+        if admin:
+            title = admin.title
+        else:
             title = model_name
 
         items.append({"url": url, "title": title})
@@ -35,7 +34,10 @@ def menu_panel(context, request):
 
 @panel_config('admin_buttons', renderer='pylonsprojectjp:templates/admin/panels/admin_buttons.mako')
 def buttons_panel(context, request):
-    return {}
+    return {
+        "new_button_link": request.route_url("admin_new", model=request.matchdict['model']),
+        "new_button_label": "Add",
+        }
 
 
 @panel_config('pager', renderer='pylonsprojectjp:templates/admin/panels/pager.mako')

@@ -1,9 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from pyramid.view import view_config, view_defaults
-from pyramid.httpexceptions import HTTPForbidden, HTTPNotFound
+from pyramid.httpexceptions import HTTPForbidden, HTTPNotFound, HTTPFound
 
-from .api import get_form_info, get_model, get_page
+from formencode.api import Invalid
+
+from .api import (
+    get_admin,
+    get_model,
+    get_page,
+    create_instance,
+    update_instance,
+    )
 
 
 @view_config(route_name='admin_dashboard', layout='admin',
@@ -38,31 +46,25 @@ class AdminView(object):
 
         return get_page(self.request, model, **args)
 
-    def get_entry(self, model, id):
+    def get_instance(self, model, id):
         return model.get_by_id(id)
 
     @view_config(route_name='admin_index', request_method='GET',
                  renderer='pylonsprojectjp:templates/admin/list.mako')
     def admin_list_view(self):
         model_name = self.request.matchdict['model']
-
-        info = get_form_info(self.request, model_name)
-        if info is None:
+        admin = get_admin(self.request, model_name)
+        if admin is None:
             raise HTTPNotFound('No such model')
 
-        # def fa_url(model_name, row_id):
-        #     return self.request.route_url('admin_entry', model=model_name, id=row_id)
-        # self.request.fa_url = fa_url
-        # self.request.model_name = model_name
-
-        page = self.get_page(info.model_class)
+        page = self.get_page(admin.model_class)
         return {
-            "page_title": info.title,
+            "page_title": admin.title,
             "page": page,
             "grid_data": {
                 "model_name": model_name,
-                "model_class": info.model_class,
-                "columns": info.list_columns,
+                "model_class": admin.model_class,
+                "columns": admin.list_columns,
                 "items": page.items,
                 },
             }
@@ -71,15 +73,60 @@ class AdminView(object):
                  renderer='pylonsprojectjp:templates/admin/show.mako')
     def admin_detail_view(self):
         model = self.get_model(self.request.matchdict['model'])
-        entry = self.get_entry(model, self.request.matchdict['id'])
-        return {"entry": entry, "model": model}
+        instance = self.get_instance(model, self.request.matchdict['id'])
+        return {"instance": instance, "model": model}
 
-    @view_config(route_name='admin_new', request_method='GET',
+    @view_config(route_name='admin_new',
                  renderer='pylonsprojectjp:templates/admin/new.mako')
-    def admin_new_entry(self):
-        return {}
+    def admin_new_view(self):
+        matchdict = self.request.matchdict
 
-    @view_config(route_name='admin_edit', request_method='GET',
+        admin = get_admin(self.request, matchdict['model'])
+        form = admin.get_form(None)
+
+        value = {}
+        if self.request.POST:
+            try:
+                params = form.validate(self.request.POST)
+            except Invalid:
+                value = self.request.POST
+            else:
+                create_instance(self.request, admin, params)
+                index_url = self.request.route_url(
+                    'admin_index', model=matchdict['model'])
+                raise HTTPFound(index_url)
+
+        return {
+            "page_title": admin.title,
+            "form": form,
+            "value": value,
+            }
+
+    @view_config(route_name='admin_edit',
                  renderer='pylonsprojectjp:templates/admin/edit.mako')
-    def admin_edit_entry(self):
-        return {}
+    def admin_edit_view(self):
+        matchdict = self.request.matchdict
+
+        admin = get_admin(self.request, matchdict['model'])
+        instance = self.get_instance(admin.model_class, matchdict['id'])
+        form = admin.get_form(instance)
+
+        value = {}
+        if self.request.POST:
+            try:
+                params = form.validate(self.request.POST)
+            except Invalid:
+                value = self.request.POST
+            else:
+                update_instance(self.request, admin, instance, params)
+                index_url = self.request.route_url(
+                    'admin_index', model=matchdict['model'])
+                raise HTTPFound(index_url)
+        else:
+            value = instance.to_dict()
+
+        return {
+            "page_title": admin.title,
+            "form": form,
+            "value": value,
+            }

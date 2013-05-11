@@ -2,9 +2,9 @@
 
 <form method="POST" enctype="multipart/form-data" action="">
   <div>
-    ${ form.render() }
+    ${ form.display(value) }
   </div>
-  <p class="fa_field">
-    ${ actions.buttons(request)|n }
-  </p>
+  ## <p class="fa_field">
+  ##   ${ actions.buttons(request)|n }
+  ## </p>
 </form>
