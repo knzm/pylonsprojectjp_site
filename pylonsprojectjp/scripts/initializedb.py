@@ -12,7 +12,7 @@ from pyramid.paster import (
     )
 
 from pylonsprojectjp.models import DBSession, BaseModel
-from pylonsprojectjp.apps.account.models import UserModel
+from pylonsprojectjp.apps.auth.models import UserModel, GroupModel
 from pylonsprojectjp.apps.blog.models import BlogEntryModel
 
 def usage(argv):
@@ -24,12 +24,20 @@ def usage(argv):
 def main(argv=sys.argv):
     if len(argv) != 2:
         usage(argv)
+
     config_uri = argv[1]
     setup_logging(config_uri)
     settings = get_appsettings(config_uri)
+
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     BaseModel.metadata.create_all(engine)
+
     with transaction.manager:
-        admin = UserModel(name=u'admin', password=u'admin')
-        DBSession.add(admin)
+        from pylonsprojectjp.apps.admin.api import get_user_by_name
+        if not get_user_by_name("admin"):
+            group = GroupModel.get_or_create(group_name=u"admin")
+            admin = UserModel(username=u"admin")
+            admin.password = u"admin"
+            admin.groups.append(group)
+            DBSession.add(admin)
