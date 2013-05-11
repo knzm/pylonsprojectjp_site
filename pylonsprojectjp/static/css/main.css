@@ -150,7 +150,7 @@ html {
     position: absolute;
     top: 80px;
     right: 0;
-    width: 150px;
+    width: 200px;
 }
 #bottom {
     clear: both;
@@ -165,8 +165,8 @@ html {
     padding: 5px;
 }
 
-.rightsidebar-container {
-    margin-right: 150px;
+#main-wrapper.rightsidebar-container {
+    margin-right: 200px;
 }
 
 
