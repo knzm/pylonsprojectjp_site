@@ -43,6 +43,8 @@ def main(global_config, **settings):
     config.scan('.apps.auth')
     config.scan('.apps.blog')
 
+    config.scan('.layout')
+
     # don't quote ";" in generated urls
     from .custom import monkeypatch_quote_path_segment
     monkeypatch_quote_path_segment()

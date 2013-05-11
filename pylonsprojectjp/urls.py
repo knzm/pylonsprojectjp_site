@@ -12,4 +12,4 @@ def includeme(config):
     config.include('.apps.top.urls')
     config.include('.apps.auth.urls')
     config.include('.apps.admin.urls', route_prefix='/admin')
-    config.include('.apps.blog.urls', route_prefix='/blog')
+    config.include('.apps.blog.urls', route_prefix='/news')

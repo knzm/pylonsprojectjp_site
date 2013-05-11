@@ -1,0 +1,11 @@
+<ul class="nav nav-list">
+  <li{{ (' class="active"' if is_active('/link/')) | safe }}>
+    <a href="/link/"><i class="icon-chevron-right"></i>リンク</a>
+  </li>
+  <li{{ (' class="active"' if is_active('/news/')) | safe }}>
+    <a href="/news/"><i class="icon-chevron-right"></i>news</a>
+  </li>
+  <li{{ (' class="active"' if is_active('/publication/')) | safe }}>
+    <a href="/publication/"><i class="icon-chevron-right"></i>発表資料</a>
+  </li>
+</ul>

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from pyramid_layout.panel import panel_config
+
+
 class BasicLayout(object):
     page_title = 'Pylons Project JP'
 
@@ -21,3 +24,12 @@ class AdminLayout(object):
     @property
     def project_url(self):
         return self.request.route_url('home')
+
+
+@panel_config('menu', renderer='pylonsprojectjp:templates/menu.jinja2')
+def menu_panel(context, request):
+    def is_active(path):
+        return request.path.startswith(path)
+    return {
+        "is_active": is_active,
+        }
