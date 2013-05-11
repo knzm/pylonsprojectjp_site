@@ -14,7 +14,6 @@ requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
-    'wtforms',
     'webhelpers',
     'pyramid_jinja2',
     'pyramid_layout',
