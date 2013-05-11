@@ -13,6 +13,6 @@ def includeme(config):
         ]
     config.add_admin_form(
         form_class='.forms.BlogCreateForm',
-        model_class='.models.EntryModel',
+        model_class='.models.BlogEntryModel',
         name='blog', title=u"ブログ管理",
         list_columns=list_columns)

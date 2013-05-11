@@ -18,7 +18,7 @@ from webhelpers.date import time_ago_in_words
 from pylonsprojectjp.models import BaseModel
 
 
-class EntryModel(BaseModel):
+class BlogEntryModel(BaseModel):
     __tablename__ = 'entries'
 
     id = Column(Integer, primary_key=True)

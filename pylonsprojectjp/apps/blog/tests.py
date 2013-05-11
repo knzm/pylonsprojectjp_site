@@ -6,7 +6,7 @@ import transaction
 from pyramid import testing
 
 from pylonsprojectjp.models import DBSession, setup_db, teardown_db
-from .models import EntryModel
+from .models import BlogEntryModel
 
 
 class TestBlogIndexView(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestBlogIndexView(unittest.TestCase):
         setup_db('sqlite://')
 
         with transaction.manager:
-            model = EntryModel(title=u"blog title", body=u"blog content")
+            model = BlogEntryModel(title=u"blog title", body=u"blog content")
             DBSession.add(model)
 
     def tearDown(self):

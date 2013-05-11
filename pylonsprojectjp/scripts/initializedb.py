@@ -13,7 +13,7 @@ from pyramid.paster import (
 
 from pylonsprojectjp.models import DBSession, BaseModel
 from pylonsprojectjp.apps.account.models import UserModel
-from pylonsprojectjp.apps.blog.models import EntryModel
+from pylonsprojectjp.apps.blog.models import BlogEntryModel
 
 def usage(argv):
     cmd = os.path.basename(argv[0])

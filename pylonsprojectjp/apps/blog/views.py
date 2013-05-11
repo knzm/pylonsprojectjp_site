@@ -6,7 +6,7 @@ from pyramid.view import view_config
 from pylonsprojectjp.models import DBSession
 
 from .api import get_paginator
-from .models import EntryModel
+from .models import BlogEntryModel
 from .forms import BlogCreateForm, BlogUpdateForm
 
 
@@ -20,7 +20,7 @@ def blog_index_view(request):
 @view_config(route_name='blog_entry', renderer="pylonsprojectjp:templates/blog/view.jinja2")
 def blog_entry_view(request):
     id = int(request.matchdict.get('id', -1))
-    entry = EntryModel.by_id(id)
+    entry = BlogEntryModel.get_by_id(id)
     if not entry:
         return HTTPNotFound()
     return {'entry': entry}
@@ -30,12 +30,12 @@ def blog_entry_view(request):
              renderer="pylonsprojectjp:templates/blog/edit.jinja2",
              permission='create')
 def blog_create_view(request):
-    entry = EntryModel()
+    entry = BlogEntryModel()
     form = BlogCreateForm(request.POST)
     if request.method == 'POST' and form.validate():
         form.populate_obj(entry)
         DBSession.add(entry)
-        return HTTPFound(location=request.route_url('home'))
+        return HTTPFound(location=request.route_url('blog_index'))
     return {'form': form, 'action': request.matchdict.get('action')}
 
 
@@ -44,7 +44,7 @@ def blog_create_view(request):
              permission='edit')
 def blog_update_view(request):
     id = int(request.params.get('id', -1))
-    entry = EntryModel.by_id(id)
+    entry = BlogEntryModel.get_by_id(id)
     if not entry:
         return HTTPNotFound()
     form = BlogUpdateForm(request.POST, entry)
