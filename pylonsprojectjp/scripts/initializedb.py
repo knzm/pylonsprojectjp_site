@@ -42,3 +42,16 @@ def main(argv=sys.argv):
             admin.password = u"admin"
             admin.groups.append(group)
             DBSession.add(admin)
+
+        from pylonsprojectjp.apps.page.api import get_page
+        if not get_page(()):
+            body = u"""\
+これはテストサイトです。
+`/admin/ </admin/>`_ から管理画面にログインできます。
+
+- ユーザ名: admin
+- パスワード: admin
+"""
+            page = PageModel(url='/', title=u"Pylons Project JP", body=body,
+                             template='index.jinja2')
+            DBSession.add(page)
