@@ -2,17 +2,32 @@
 
 from pyramid.httpexceptions import HTTPNotFound
 from pyramid.view import view_config
+from pyramid.renderers import RendererHelper
+
+from docutils.core import publish_parts
 
 from .api import get_page
 
 
-@view_config(route_name="page", renderer="pylonsprojectjp:templates/page/index.jinja2")
+@view_config(route_name="page")
 def page_view(request):
     subpath = request.matchdict["subpath"]
     page = get_page(subpath)
     if page is None:
         raise HTTPNotFound
-    return {
+
+    renderer_name = "pylonsprojectjp:templates/page/" + page.template
+
+    helper = RendererHelper(
+        name=renderer_name,
+        registry=request.registry)
+
+    content = publish_parts(page.body, writer_name='html')['html_body']
+
+    value = {
         "title": page.title,
-        "body": page.body,
+        "content": content,
         }
+
+    return helper.render_to_response(
+        value, None, request=request)

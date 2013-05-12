@@ -15,6 +15,6 @@ def notfound_view(request):
     return FileResponse(path)
 
 
-@view_config(route_name='home', renderer="pylonsprojectjp:templates/index.jinja2")
-def index(request):
-    return {}
+# @view_config(route_name='home', renderer="pylonsprojectjp:templates/index.jinja2")
+# def index(request):
+#     return {}

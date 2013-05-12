@@ -1,11 +1,19 @@
 {% extends main_template %}
 
 {%- block contents -%}
-<div id="main-wrapper">
+<div id="main-wrapper" class="rightsidebar-container">
   <div id="main">
     <h1>{{ title }}</h1>
     <hr />
-    <p>{{ body }}</p>
+    <p>{{ content | safe }}</p>
+  </div>
+  <div id="rightsidebar">
+    <div>
+      {% include 'widgets/twitter.jinja2' %}
+    </div>
+    <div>
+      {% include 'widgets/rss.jinja2' %}
+    </div>
   </div>
 </div>
 {%- endblock -%}

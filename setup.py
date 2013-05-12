@@ -23,7 +23,7 @@ requires = [
     'js.bootstrap',
     'formalchemy',
     'pyramid_tw2',
-    'tw2.tinymce',
+    'docutils',
     ]
 
 links = [

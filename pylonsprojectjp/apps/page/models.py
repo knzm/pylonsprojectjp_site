@@ -25,3 +25,4 @@ class PageModel(BaseModel):
     url = Column(Unicode(255), nullable=False)
     title = Column(Unicode(255), unique=True, nullable=False)
     body = Column(UnicodeText, default=u'')
+    template = Column(Text, nullable=False)
