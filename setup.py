@@ -24,6 +24,11 @@ requires = [
     'formalchemy',
     'pyramid_tw2',
     'docutils',
+    'tw2.core',
+    'tw2.forms',
+    'tw2.tinymce',
+    'formencode',
+    'genshi',
     ]
 
 links = [
