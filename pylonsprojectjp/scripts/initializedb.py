@@ -35,8 +35,8 @@ def main(argv=sys.argv):
     BaseModel.metadata.create_all(engine)
 
     with transaction.manager:
-        from pylonsprojectjp.apps.admin.api import get_user_by_name
-        if not get_user_by_name("admin"):
+        from pylonsprojectjp.apps.auth.security import get_user_by_username
+        if not get_user_by_username("admin"):
             group = GroupModel.get_or_create(group_name=u"admin")
             admin = UserModel(username=u"admin")
             admin.password = u"admin"
