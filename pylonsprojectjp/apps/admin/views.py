@@ -14,13 +14,13 @@ from .api import (
     )
 
 
-@view_config(route_name='admin_dashboard', layout='admin',
+@view_config(route_name='admin_dashboard', layout='admin', permission='view',
              renderer='pylonsprojectjp:templates/admin/dashboard.mako')
 def admin_dashboard_view(request):
     return {}
 
 
-@view_defaults(layout="admin")
+@view_defaults(layout="admin", permission='view')
 class AdminView(object):
     def __init__(self, context, request):
         self.context = context
