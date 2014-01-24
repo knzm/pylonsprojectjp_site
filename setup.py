@@ -21,7 +21,7 @@ requires = [
     'pyramid_assetviews',
     'pyramid_fanstatic',
     'js.modernizr',
-    'js.bootstrap',
+    'js.bootstrap<3.0',
     'formalchemy',
     'pyramid_tw2',
     'docutils',
