@@ -11,8 +11,8 @@ from .api import get_page
 
 @view_config(route_name="page")
 def page_view(request):
-    subpath = request.matchdict["subpath"]
-    page = get_page(subpath)
+    # subpath = request.matchdict["subpath"]
+    page = get_page(request.path_info)
     if page is None:
         raise HTTPNotFound
 
