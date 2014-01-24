@@ -15,6 +15,7 @@ requires = [
     'zope.sqlalchemy',
     'waitress',
     'webhelpers',
+    'pyramid_mako',
     'pyramid_jinja2',
     'pyramid_layout',
     'pyramid_assetviews',
