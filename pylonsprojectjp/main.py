@@ -1,40 +1,29 @@
 # -*- coding: utf-8 -*-
 
-from pyramid.authentication import AuthTktAuthenticationPolicy
-from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
-from sqlalchemy import engine_from_config
-
-from .models import DBSession
 
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    engine = engine_from_config(settings, 'sqlalchemy.')
-    DBSession.configure(bind=engine)
+    config = Configurator(settings=settings)
 
-    secret = settings.get('pylonsprojectjp.auth.secret', 'somesecret')
-    authentication_policy = AuthTktAuthenticationPolicy(secret)
-    authorization_policy = ACLAuthorizationPolicy()
+    # initialize db
+    config.include('.models')
 
-    config = Configurator(settings=settings,
-                          authentication_policy=authentication_policy,
-                          authorization_policy=authorization_policy)
+    # define authn/authz policy
+    config.include('.security')
 
     # define layouts
-    config.add_layout('.layout.BasicLayout', template='layout.jinja2')
-    config.add_layout('.layout.AdminLayout', name='admin',
-                      template='pylonsprojectjp:templates/admin/base.mako')
-    config.add_layout('.layout.AdminLayout', name='auth',
-                      template='pylonsprojectjp:templates/auth/base.mako')
+    config.include('.layout')
+    config.scan('.layout')
 
     # enable per-app extensions
     config.include('.apps.admin')
 
     # setup project extensions
     config.include('.urls')
-    config.include('.subscribers')
+    config.include('.ext')
 
     # load models, look up views, etc...
     config.scan('.apps.page')
@@ -42,11 +31,5 @@ def main(global_config, **settings):
     config.scan('.apps.admin')
     config.scan('.apps.auth')
     config.scan('.apps.blog')
-
-    config.scan('.layout')
-
-    # don't quote ";" in generated urls
-    from .custom import monkeypatch_quote_path_segment
-    monkeypatch_quote_path_segment()
 
     return config.make_wsgi_app()

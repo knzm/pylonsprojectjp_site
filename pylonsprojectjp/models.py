@@ -2,6 +2,7 @@
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.properties import ColumnProperty
+from sqlalchemy import engine_from_config, create_engine
 
 import sqlalchemy as sa
 from sqlalchemy.orm import (
@@ -63,7 +64,6 @@ BaseModel = declarative_base(cls=BaseModelMixin)
 
 
 def setup_db(dburi):
-    from sqlalchemy import create_engine
     engine = create_engine(dburi)
     DBSession.configure(bind=engine)
     BaseModel.metadata.create_all(engine)
@@ -71,3 +71,9 @@ def setup_db(dburi):
 
 def teardown_db():
     DBSession.remove()
+
+
+def includeme(config):
+    settings = config.registry.settings
+    engine = engine_from_config(settings, 'sqlalchemy.')
+    DBSession.configure(bind=engine)

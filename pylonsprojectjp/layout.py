@@ -33,3 +33,11 @@ def menu_panel(context, request):
     return {
         "is_active": is_active,
         }
+
+
+def includeme(config):
+    config.add_layout('.layout.BasicLayout', template='layout.jinja2')
+    config.add_layout('.layout.AdminLayout', name='admin',
+                      template='pylonsprojectjp:templates/admin/base.mako')
+    config.add_layout('.layout.AdminLayout', name='auth',
+                      template='pylonsprojectjp:templates/auth/base.mako')
